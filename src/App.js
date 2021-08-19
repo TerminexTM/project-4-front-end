@@ -4,17 +4,18 @@ import './App.css'
 
 import Add from './components/Add'
 import Edit from './components/Edit'
-// import NewBusinessForm from './components/NewBusinessForm'
+import NewBusinessForm from './components/NewBusinessForm'
+import LoginForm from './components/LoginForm'
 
 const App = () => {
     let [products, setProducts] = useState([])
-    // let [businesses, setBusinesses] = useState([])
-    //
-    // const [toggleLogin, setToggleLogin] = useState(true)
-    // const [toggleError, setToggleError] = useState(false)
-    // const [errorMessage, setErrorMessage] = useState('')
-    // const [toggleLogout, setToggleLogout] = useState(false)
-    // const [currentBusiness, setCurrentBusiness] = useState({})
+    let [businesses, setBusinesses] = useState([])
+
+    const [toggleLogin, setToggleLogin] = useState(true)
+    const [toggleError, setToggleError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const [toggleLogout, setToggleLogout] = useState(false)
+    const [currentBusiness, setCurrentBusiness] = useState({})
 
     const handleCreate = (addProduct) => {
         axios
@@ -43,23 +44,60 @@ const App = () => {
     }
 
     // create new business
-    // const handleCreateBusiness = (userObj) => {
-    //     axios
-    //         .post('http://localhost:8000/api/#', userObj)
-    //         .then((response) => {
-    //             if(response.data.username) {
-    //                 // console.log(response)
-    //                 setToggleError(false)
-    //                 setErrorMessage('')
-    //                 setCurrentBusiness(response.data)
-    //                 handleToggleLogout()
-    //             } else {
-    //                 setErrorMessage(response.data)
-    //                 setToggleError(true)
-    //             }
-    //         })
-    //
-    // }
+    const handleCreateBusiness = (businessObj) => {
+        axios
+            .post('http://localhost:8000/api/#', businessObj)
+            .then((response) => {
+                if(response.data.username) {
+                    // console.log(response)
+                    setToggleError(false)
+                    setErrorMessage('')
+                    setCurrentBusiness(response.data)
+                    handleToggleLogout()
+                } else {
+                    setErrorMessage(response.data)
+                    setToggleError(true)
+                }
+            })
+    }
+
+    const handleLogin = (userObj) => {
+        axios
+            .put('http://localhost:8000/login', userObj)
+            .then((response) => {
+                if (response.data.username) {
+                    setToggleError(false)
+                    setErrorMessage('')
+                    setCurrentBusiness(response.data)
+                    handleToggleLogout()
+                } else {
+                    setToggleError(true)
+                    setErrorMessage(response.data)
+                }
+            })
+    }
+
+    const handleLogout = () => {
+        setCurrentBusiness({})
+        handleToggleLogout()
+    }
+
+    const handleToggleForm = () => {
+        setToggleError(false)
+        if (toggleLogin === true) {
+            setToggleLogin(false)
+        } else {
+            setToggleLogin(true)
+        }
+    }
+
+    const handleToggleLogout = () => {
+        if (toggleLogout) {
+            setToggleLogout(false)
+        } else {
+            setToggleLogout(true)
+        }
+    }
 
     const getProducts = () => {
         axios
@@ -78,7 +116,31 @@ const App = () => {
     return (
         <>
             <h1>Businesses & Products</h1>
+            <div>
+                {toggleLogout ?
+                    <button onClick={handleLogout} >Logout</button> :
+                    <div >
+                        {toggleLogin ?
+                            <LoginForm handleLogin={handleLogin} toggleError={toggleError} errorMessage={errorMessage} />
+                            :
+                            <NewBusinessForm handleCreateBusiness={handleCreateBusiness} toggleError={toggleError} errorMessage={errorMessage} />
+                        }
+                        <button onClick={handleToggleForm} >
+                            {toggleLogin ? 'Need an account?' : 'Already have an account?'}
+                        </button>
+                    </div>
+                }
 
+                {currentBusiness.username ?
+                    <div >
+                        <h3>{currentBusiness.name}</h3>
+                    </div>
+                    :
+                    null
+                }
+            </div>
+            <br/>
+            <br/>
             <Add handleCreate={handleCreate} />
             <div className="products">
                 {products.map((product) => {
