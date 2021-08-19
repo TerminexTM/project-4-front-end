@@ -4,14 +4,21 @@ import './App.css'
 
 import Add from './components/Add'
 import Edit from './components/Edit'
+// import NewBusinessForm from './components/NewBusinessForm'
 
 const App = () => {
     let [products, setProducts] = useState([])
-    let [businesses, setBusinesses] = useState([])
+    // let [businesses, setBusinesses] = useState([])
+    //
+    // const [toggleLogin, setToggleLogin] = useState(true)
+    // const [toggleError, setToggleError] = useState(false)
+    // const [errorMessage, setErrorMessage] = useState('')
+    // const [toggleLogout, setToggleLogout] = useState(false)
+    // const [currentBusiness, setCurrentBusiness] = useState({})
 
     const handleCreate = (addProduct) => {
         axios
-            .post('http://localhost:8000/api/#', addProduct)
+            .post('https://project-four-backend.herokuapp.com/api/products', addProduct)
             .then((response) => {
                 console.log(response)
                 getProducts()
@@ -20,7 +27,7 @@ const App = () => {
 
     const handleUpdate = (editProduct) => {
         axios
-            .put('http://localhost:8000/api/#' + editProduct.id, editProduct)
+            .put('https://project-four-backend.herokuapp.com/api/products/' + editProduct.id, editProduct)
             .then((response) => {
                 getProducts()
             })
@@ -29,15 +36,34 @@ const App = () => {
 
     const handleDelete = (event) => {
         axios
-            .delete('http://localhost:8000/api/#' + event.target.value)
+            .delete('https://project-four-backend.herokuapp.com/api/products/' + event.target.value)
             .then((response) => {
                 getProducts()
             })
     }
 
+    // create new business
+    // const handleCreateBusiness = (userObj) => {
+    //     axios
+    //         .post('http://localhost:8000/api/#', userObj)
+    //         .then((response) => {
+    //             if(response.data.username) {
+    //                 // console.log(response)
+    //                 setToggleError(false)
+    //                 setErrorMessage('')
+    //                 setCurrentBusiness(response.data)
+    //                 handleToggleLogout()
+    //             } else {
+    //                 setErrorMessage(response.data)
+    //                 setToggleError(true)
+    //             }
+    //         })
+    //
+    // }
+
     const getProducts = () => {
         axios
-            .get('http://localhost:8000/api/#')
+            .get('https://project-four-backend.herokuapp.com/api/products')
             .then(
                 (response) => setProducts(response.data),
                 (error) => console.error(error)
@@ -52,6 +78,7 @@ const App = () => {
     return (
         <>
             <h1>Businesses & Products</h1>
+
             <Add handleCreate={handleCreate} />
             <div className="products">
                 {products.map((product) => {

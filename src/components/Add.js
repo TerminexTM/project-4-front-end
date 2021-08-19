@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 const Add = (props) => {
-    let emptyProduct = { name: '', image: '', description: '', price: 0, category: '' }
+    let emptyProduct = { name: '', image: '', description: '', price: 0, category: 'clothing', business_name: '', business_id: 0 }
     const [product, setProduct] = useState(emptyProduct)
 
     const handleChange = (event) => {
@@ -28,8 +28,21 @@ const Add = (props) => {
                 <label htmlFor="price">Price: </label>
                 <input type="number" name="price" onChange={handleChange} />
                 <br/>
+
                 <label htmlFor="category">Category: </label>
-                <input type="text" name="category" onChange={handleChange} />
+                <select name="category" onChange={handleChange}>
+                    <option value="clothing">Clothing</option>
+                    <option value="electronics">Electronics</option>
+                </select>
+
+                {/* <label htmlFor="category">Category: </label>
+                <input type="text" name="category" onChange={handleChange} /> */}
+                <br/>
+                <label htmlFor="business_name">Business Name: </label>
+                <input type="text" name="business_name" onChange={handleChange} />
+                <br/>
+                <label htmlFor="business_id">Business ID: </label>
+                <input type="number" name="business_id" onChange={handleChange} />
                 <br/>
                 <input type="submit" />
             </form>
