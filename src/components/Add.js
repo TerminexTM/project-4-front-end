@@ -33,6 +33,7 @@ const Add = (props) => {
                 <select name="category" onChange={handleChange}>
                     <option value="clothing">Clothing</option>
                     <option value="electronics">Electronics</option>
+                    <option value="pets">Pets</option>
                 </select>
 
                 {/* <label htmlFor="category">Category: </label>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './App.css'
+import '../App.css'
 
 const NewBusinessForm = (props) => {
     const [username, setUsername] = useState('')
@@ -7,28 +7,24 @@ const NewBusinessForm = (props) => {
 
     const triggerCreateUser = (event) => {
         event.preventDefault()
-        let userObj = {
+        let businessObj = {
             username: username,
             password: password
         }
-        props.handleCreateBusiness(userObj)
+        props.handleCreateBusiness(businessObj)
     }
 
     return (
-        <div className="" class='formContainer'>
-            <h1 class='formTitle'>Create an Account</h1>
-            <form onSubmit={triggerCreateUser} class='inputForm'>
-                <input type='text' placeholder='Username' class='textInput' onChange={(event) => {setUsername(event.target.value)}} />
-                <input type='password' placeholder='Password' class='textInput' onChange={(event) => {setPassword(event.target.value)}}
-                {props.toggleError ?
-                    <h5 class='errorMsg'>{props.errorMessage}</h5>
-                    :
-                    null
-                }
-                <input type='submit' value='Register' class='submitBtn' />
+        <div>
+            <h3>Create an Account</h3>
+            <form onSubmit={triggerCreateUser} >
+                <input type='text' placeholder='Username' onChange={(event) => {setUsername(event.target.value)}} />
+                <input type='password' placeholder='Password' onChange={(event) => {setPassword(event.target.value)}} />
+
+                <input type='submit' value='Register'  />
             </form>
         </div>
     )
 }
 
-// export default NewBusinessForm;
+export default NewBusinessForm;
