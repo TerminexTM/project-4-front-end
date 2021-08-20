@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import React, { Component } from 'react'
+import Select from 'react-select'
 import './App.css'
 
 import Add from './components/Add'
@@ -17,6 +19,7 @@ const App = () => {
     const [toggleLogout, setToggleLogout] = useState(false)
     const [currentBusiness, setCurrentBusiness] = useState({})
 
+    // ============== Products Handles ============== //
     const handleCreate = (addProduct) => {
         axios
             .post('https://project-four-backend.herokuapp.com/api/products', addProduct)
@@ -43,10 +46,10 @@ const App = () => {
             })
     }
 
-    // create new business
-    const handleCreateBusiness = (businessObj) => {
+    // ============== Business Registration Handles ============== //
+    const handleCreateBusinessAuth = (businessObj) => {
         axios
-            .post('http://localhost:8000/api/#', businessObj)
+            .post('https://project-four-backend.herokuapp.com/api/companies', businessObj)
             .then((response) => {
                 if(response.data.username) {
                     // console.log(response)
@@ -61,9 +64,10 @@ const App = () => {
             })
     }
 
+// ============== Login and Logout Handles ============== //
     const handleLogin = (userObj) => {
         axios
-            .put('http://localhost:8000/login', userObj)
+            .put('https://project-four-backend.herokuapp.com/api/companies', userObj)
             .then((response) => {
                 if (response.data.username) {
                     setToggleError(false)
@@ -113,6 +117,8 @@ const App = () => {
         getProducts()
     }, [])
 
+    
+
     return (
         <>
             <h1>Businesses & Products</h1>
@@ -123,14 +129,13 @@ const App = () => {
                         {toggleLogin ?
                             <LoginForm handleLogin={handleLogin} toggleError={toggleError} errorMessage={errorMessage} />
                             :
-                            <NewBusinessForm handleCreateBusiness={handleCreateBusiness} toggleError={toggleError} errorMessage={errorMessage} />
+                            <NewBusinessForm handleCreateBusinessAuth={handleCreateBusinessAuth} toggleError={toggleError} errorMessage={errorMessage} />
                         }
                         <button onClick={handleToggleForm} >
                             {toggleLogin ? 'Need an account?' : 'Already have an account?'}
                         </button>
                     </div>
                 }
-
                 {currentBusiness.username ?
                     <div >
                         <h3>{currentBusiness.name}</h3>
@@ -142,6 +147,7 @@ const App = () => {
             <br/>
             <br/>
             <Add handleCreate={handleCreate} />
+
             <div className="products">
                 {products.map((product) => {
                     return (
@@ -149,6 +155,9 @@ const App = () => {
                             <img src={product.image} />
                             <h4>Name: {product.name}</h4>
                             <h5>Description: {product.description}</h5>
+                            <h5>Category: {product.category}</h5>
+                            <h5>Business: {product.business_name}</h5>
+                            <h5>Business ID: {product.business_id}</h5>
                             <h5>Price: {product.price}</h5>
                             <Edit handleUpdate={handleUpdate} product={product} />
                             <button onClick={handleDelete} value={product.id}>

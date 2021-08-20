@@ -28,16 +28,12 @@ const Add = (props) => {
                 <label htmlFor="price">Price: </label>
                 <input type="number" name="price" onChange={handleChange} />
                 <br/>
-
                 <label htmlFor="category">Category: </label>
                 <select name="category" onChange={handleChange}>
                     <option value="clothing">Clothing</option>
                     <option value="electronics">Electronics</option>
                     <option value="pets">Pets</option>
                 </select>
-
-                {/* <label htmlFor="category">Category: </label>
-                <input type="text" name="category" onChange={handleChange} /> */}
                 <br/>
                 <label htmlFor="business_name">Business Name: </label>
                 <input type="text" name="business_name" onChange={handleChange} />
