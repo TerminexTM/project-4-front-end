@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import React, { Component } from 'react'
-import Select from 'react-select'
 import './App.css'
 
 import Add from './components/Add'
@@ -117,7 +115,7 @@ const App = () => {
         getProducts()
     }, [])
 
-    
+
 
     return (
         <>
