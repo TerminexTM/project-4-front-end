@@ -17,6 +17,9 @@ const App = () => {
     const [toggleLogout, setToggleLogout] = useState(false)
     const [currentBusiness, setCurrentBusiness] = useState({})
 
+    let businessKey = {...currentBusiness}
+    console.log(businessKey);
+
     // ============== Products Handles ============== //
     const handleCreate = (addProduct) => {
         axios
@@ -49,7 +52,7 @@ const App = () => {
         axios
             .post('https://project-four-backend.herokuapp.com/api/companies', businessObj)
             .then((response) => {
-                if(response.data.username) {
+                if(response.data.name) {
                     // console.log(response)
                     setToggleError(false)
                     setErrorMessage('')
@@ -65,9 +68,9 @@ const App = () => {
 // ============== Login and Logout Handles ============== //
     const handleLogin = (userObj) => {
         axios
-            .put('https://project-four-backend.herokuapp.com/api/companies', userObj)
+            .put('https://project-four-backend.herokuapp.com/api/companies/login', userObj)
             .then((response) => {
-                if (response.data.username) {
+                if (response.data.name) {
                     setToggleError(false)
                     setErrorMessage('')
                     setCurrentBusiness(response.data)
@@ -119,7 +122,7 @@ const App = () => {
 
     return (
         <>
-            <h1>Businesses & Products</h1>
+            <h1>E-commerce Store</h1>
             <div>
                 {toggleLogout ?
                     <button onClick={handleLogout} >Logout</button> :
@@ -144,7 +147,8 @@ const App = () => {
             </div>
             <br/>
             <br/>
-            <Add handleCreate={handleCreate} />
+            
+            <Add handleCreate={handleCreate} businessKey={businessKey} />
 
             <div className="products">
                 {products.map((product) => {
@@ -157,10 +161,14 @@ const App = () => {
                             <h5>Business: {product.business_name}</h5>
                             <h5>Business ID: {product.business_id}</h5>
                             <h5>Price: {product.price}</h5>
-                            <Edit handleUpdate={handleUpdate} product={product} />
-                            <button onClick={handleDelete} value={product.id}>
-                                Delete
-                            </button>
+                            <Edit handleUpdate={handleUpdate} />
+                            {(currentBusiness.id === product.business_id) &&
+                                <button onClick={handleDelete} value={product.id}>
+                                    Delete
+                                </button>
+
+                            }
+
                         </div>
                     )
                 })}
