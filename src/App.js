@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
-
 import Add from './components/Add'
 import Edit from './components/Edit'
 import NewBusinessForm from './components/NewBusinessForm'
@@ -16,6 +15,7 @@ const App = () => {
     const [errorMessage, setErrorMessage] = useState('')
     const [toggleLogout, setToggleLogout] = useState(false)
     const [currentBusiness, setCurrentBusiness] = useState({})
+    const [filter, setFilter] = useState('all')
 
     const handleCreate = (addProduct) => {
         axios
@@ -109,8 +109,20 @@ const App = () => {
             .catch((error) => console.error(error))
     }
 
+    const getBusiness = (addBusiness) => {
+      axios
+         .get('https://project-four-backend.herokuapp.com/api/companies')
+         .then(
+            (response) => setBusinesses(response.data),
+            (error) => console.error(error)
+         )
+         .catch((error) => console.error(error))
+   }
+
+
     useEffect(() => {
         getProducts()
+        getBusiness()
     }, [])
 
     return (
@@ -142,8 +154,20 @@ const App = () => {
             <br/>
             <br/>
             <Add handleCreate={handleCreate} />
+            <fieldset className="filter">
+               <legend>Filter: </legend>
+               <select onChange={(e)=>{setFilter(e.target.value)}}>
+                  <option value="all">all</option>
+                  {businesses.map( (business)=> {
+                     return (
+                        <option value={business.name}>{business.name}</option>
+                     )
+                  })}
+               </select>
+            </fieldset>
+
             <div className="products">
-                {products.map((product) => {
+                {(filter===filter) && products.filter(products => products.business_name.includes(filter)).map((product) => {
                     return (
                         <div className="product" key={product.id}>
                             <img src={product.image} />
