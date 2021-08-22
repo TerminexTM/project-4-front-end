@@ -68,6 +68,7 @@ const App = () => {
                     setErrorMessage('')
                     setCurrentBusiness(response.data)
                     handleToggleLogout()
+                    getBusiness()
                 } else {
                     setErrorMessage(response.data)
                     setToggleError(true)
@@ -208,7 +209,8 @@ const App = () => {
                         {toggleLogin ?
                             <LoginForm handleLogin={handleLogin} toggleError={toggleError} errorMessage={errorMessage} />
                             :
-                            <NewBusinessForm handleCreateBusinessAuth={handleCreateBusinessAuth} toggleError={toggleError} errorMessage={errorMessage} />
+                            <NewBusinessForm
+                             handleCreateBusinessAuth={handleCreateBusinessAuth} toggleError={toggleError} errorMessage={errorMessage} />
                         }
                         <button onClick={handleToggleForm} >
                             {toggleLogin ? 'Need an account?' : 'Already have an account?'}
@@ -248,7 +250,7 @@ const App = () => {
             <br/>
             <br/>
 
-            <Add handleCreate={handleCreate} businessKey={businessKey />
+            <Add handleCreate={handleCreate} businessKey={businessKey} />
             <fieldset className="filter">
                <legend>Filter: </legend>
                <select onChange={(e)=>{setFilter(e.target.value)}}>
@@ -263,7 +265,7 @@ const App = () => {
 
 
             <div className="products">
-                {(filter===filter) && products.filter(products => products.business_name.includes(filter)).map((product) => {
+                {(filter===filter && filter!=="all") && products.filter(products => products.business_name.includes(filter)).map((product) => {
                     return (
                         <div className="product" key={product.id}>
                             <img src={product.image} />
@@ -283,6 +285,28 @@ const App = () => {
 
                         </div>
                     )
+                })}
+                {(filter==="all") && products.map( (product) => {
+                   return (
+                       <div className="product" key={product.id}>
+                           <img src={product.image} />
+                           <h4>Name: {product.name}</h4>
+                           <h5>Description: {product.description}</h5>
+                           <h5>Category: {product.category}</h5>
+                           <h5>Business: {product.business_name}</h5>
+                           <h5>Business ID: {product.business_id}</h5>
+                           <h5>Price: {product.price}</h5>
+                           <Edit handleUpdate={handleUpdate} />
+                           {(currentBusiness.id === product.business_id) &&
+                              <button onClick={handleDelete} value={product.id}>
+                                  Delete
+                              </button>
+
+                           }
+
+                       </div>
+                   )
+
                 })}
             </div>
         </>
