@@ -16,7 +16,7 @@ const Edit = (props) => {
 
     return (
         <>
-            <details>
+            <details id={product.id}>
                 <summary>Edit Product</summary>
                 <form onSubmit={handleSubmit} >
                     <label htmlFor="name">Name: </label>

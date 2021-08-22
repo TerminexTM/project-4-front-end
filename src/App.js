@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import {Modal} from 'react-responsive-modal'
+import 'react-responsive-modal/styles.css'
 import axios from 'axios'
 import './App.css'
 import Add from './components/Add'
@@ -9,6 +11,7 @@ import NewUserForm from './components/NewUserForm'
 import UserLoginForm from './components/UserLoginForm'
 
 const App = () => {
+   //Atlas for products and businesses
     let [products, setProducts] = useState([])
     let [businesses, setBusinesses] = useState([])
 
@@ -26,6 +29,15 @@ const App = () => {
     const [toggleUserLogin, setToggleUserLogin] = useState(true)
     const [toggleUserLogout, setToggleUserLogout] = useState(false)
     const [currentUser, setCurrentUser] = useState({})
+
+    //open and close the New Product Modal
+    const [openProductModal, setOpenProductModal] = useState(false)
+    const [productModal, setProductModal] = useState(false)
+    //Modal event handlers
+    const openProductManager = () => {setOpenProductModal(true)}
+    const closeProductManager = () => {setOpenProductModal(false)}
+    const openProduct = (id) => {setProductModal(id)}
+    const closeProduct = () => {setProductModal(false)}
 
     let businessKey = {...currentBusiness}
     console.log(businessKey);
@@ -249,8 +261,10 @@ const App = () => {
             </div>
             <br/>
             <br/>
-
-            <Add handleCreate={handleCreate} businessKey={businessKey} />
+            <button onClick={openProductManager}>Add Product</button>
+            <Modal open={openProductModal} onClose={closeProductManager}>
+               <Add handleCreate={handleCreate} businessKey={businessKey} />
+            </Modal>
             <fieldset className="filter">
                <legend>Filter: </legend>
                <select onChange={(e)=>{setFilter(e.target.value)}}>
@@ -288,15 +302,26 @@ const App = () => {
                 })}
                 {(filter==="all") && products.map( (product) => {
                    return (
-                       <div className="product" key={product.id}>
+                       <div
+                       className="product"
+                       key={product.id}
+                       id={product.id}
+                       >
                            <img src={product.image} />
+                           <h4>Name: {product.name}</h4>
+                           <h5>Price: ${product.price}</h5>
+                           <button onClick={(e)=>setProductModal(product.id)}>Show More</button>
+                           <Modal open={productModal===product.id} onClose={(e)=>setProductModal(false)}>
                            <h4>Name: {product.name}</h4>
                            <h5>Description: {product.description}</h5>
                            <h5>Category: {product.category}</h5>
                            <h5>Business: {product.business_name}</h5>
                            <h5>Business ID: {product.business_id}</h5>
-                           <h5>Price: {product.price}</h5>
-                           <Edit handleUpdate={handleUpdate} />
+                           <h5>Price: ${product.price}</h5>
+                           <h4>Name: {product.name}</h4>
+                           <img src={product.image} />
+                           <Edit handleUpdate={handleUpdate}/>
+                           </Modal>
                            {(currentBusiness.id === product.business_id) &&
                               <button onClick={handleDelete} value={product.id}>
                                   Delete
