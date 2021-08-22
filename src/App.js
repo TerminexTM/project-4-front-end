@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
-
 import Add from './components/Add'
 import Edit from './components/Edit'
 import NewBusinessForm from './components/NewBusinessForm'
@@ -21,6 +20,7 @@ const App = () => {
     const [toggleLogin, setToggleLogin] = useState(true)
     const [toggleLogout, setToggleLogout] = useState(false)
     const [currentBusiness, setCurrentBusiness] = useState({})
+    const [filter, setFilter] = useState('all')
 
     // User Login & Logout States
     const [toggleUserLogin, setToggleUserLogin] = useState(true)
@@ -180,8 +180,20 @@ const App = () => {
             .catch((error) => console.error(error))
     }
 
+    const getBusiness = (addBusiness) => {
+      axios
+         .get('https://project-four-backend.herokuapp.com/api/companies')
+         .then(
+            (response) => setBusinesses(response.data),
+            (error) => console.error(error)
+         )
+         .catch((error) => console.error(error))
+   }
+
+
     useEffect(() => {
         getProducts()
+        getBusiness()
     }, [])
 
 
@@ -236,10 +248,22 @@ const App = () => {
             <br/>
             <br/>
 
-            <Add handleCreate={handleCreate} businessKey={businessKey} />
+            <Add handleCreate={handleCreate} businessKey={businessKey />
+            <fieldset className="filter">
+               <legend>Filter: </legend>
+               <select onChange={(e)=>{setFilter(e.target.value)}}>
+                  <option value="all">all</option>
+                  {businesses.map( (business)=> {
+                     return (
+                        <option value={business.name}>{business.name}</option>
+                     )
+                  })}
+               </select>
+            </fieldset>
+
 
             <div className="products">
-                {products.map((product) => {
+                {(filter===filter) && products.filter(products => products.business_name.includes(filter)).map((product) => {
                     return (
                         <div className="product" key={product.id}>
                             <img src={product.image} />
