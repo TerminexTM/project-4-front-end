@@ -22,7 +22,7 @@ const LoginForm = (props) => {
 
     return (
         <div>
-            <h3>Login</h3>
+            <h3>Company Login</h3>
             <form onSubmit={triggerLogin} >
                 <label htmlFor="name"></label>
                 <input type='text'  name="name" placeholder='Username'  onChange={handleChange} />

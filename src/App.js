@@ -6,16 +6,26 @@ import Add from './components/Add'
 import Edit from './components/Edit'
 import NewBusinessForm from './components/NewBusinessForm'
 import LoginForm from './components/LoginForm'
+import NewUserForm from './components/NewUserForm'
+import UserLoginForm from './components/UserLoginForm'
 
 const App = () => {
     let [products, setProducts] = useState([])
     let [businesses, setBusinesses] = useState([])
 
-    const [toggleLogin, setToggleLogin] = useState(true)
+    // Error Messages
     const [toggleError, setToggleError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
+
+    // Business Login & Logout States
+    const [toggleLogin, setToggleLogin] = useState(true)
     const [toggleLogout, setToggleLogout] = useState(false)
     const [currentBusiness, setCurrentBusiness] = useState({})
+
+    // User Login & Logout States
+    const [toggleUserLogin, setToggleUserLogin] = useState(true)
+    const [toggleUserLogout, setToggleUserLogout] = useState(false)
+    const [currentUser, setCurrentUser] = useState({})
 
     let businessKey = {...currentBusiness}
     console.log(businessKey);
@@ -65,7 +75,24 @@ const App = () => {
             })
     }
 
-// ============== Login and Logout Handles ============== //
+// ============== User Registration Handles ============== //
+    const handleCreateUserAuth = (userObj) => {
+        axios
+            .post('https://project-four-backend.herokuapp.com/api/users', userObj)
+            .then((response) => {
+                if(response.data.name) {
+                    setToggleError(false)
+                    setErrorMessage('')
+                    setCurrentUser(response.data)
+                    handleToggleUserLogout()
+                } else {
+                    setErrorMessage(response.data)
+                    setToggleError(true)
+                }
+            })
+    }
+
+// ============== Business Login and Logout Handles ============== //
     const handleLogin = (userObj) => {
         axios
             .put('https://project-four-backend.herokuapp.com/api/companies/login', userObj)
@@ -104,6 +131,45 @@ const App = () => {
         }
     }
 
+    // ============== User Login and Logout Handles ============== //
+    const handleUserLogin = (userObj) => {
+        axios
+            .put('https://project-four-backend.herokuapp.com/api/users', userObj)
+            .then((response) => {
+                if (response.data.name) {
+                    setToggleError(false)
+                    setErrorMessage('')
+                    setCurrentUser(response.data)
+                    handleToggleUserLogout()
+                } else {
+                    setToggleError(true)
+                    setErrorMessage(response.data)
+                }
+            })
+    }
+
+    const handleUserLogout = () => {
+        setCurrentUser({})
+        handleToggleUserLogout()
+    }
+
+    const handleToggleUserForm = () => {
+        setToggleError(false)
+        if (toggleUserLogin === true) {
+            setToggleUserLogin(false)
+        } else {
+            setToggleUserLogin(true)
+        }
+    }
+
+    const handleToggleUserLogout = () => {
+        if (toggleUserLogout) {
+            setToggleUserLogout(false)
+        } else {
+            setToggleUserLogout(true)
+        }
+    }
+
     const getProducts = () => {
         axios
             .get('https://project-four-backend.herokuapp.com/api/products')
@@ -137,7 +203,7 @@ const App = () => {
                         </button>
                     </div>
                 }
-                {currentBusiness.username ?
+                {currentBusiness.name ?
                     <div >
                         <h3>{currentBusiness.name}</h3>
                     </div>
@@ -145,9 +211,31 @@ const App = () => {
                     null
                 }
             </div>
+            <div>
+                {toggleUserLogout ?
+                    <button onClick={handleUserLogout} >Logout</button> :
+                    <div >
+                        {toggleUserLogin ?
+                            <UserLoginForm handleUserLogin={handleUserLogin} toggleError={toggleError} errorMessage={errorMessage} />
+                            :
+                            <NewUserForm handleCreateUserAuth={handleCreateUserAuth} toggleError={toggleError} errorMessage={errorMessage} />
+                        }
+                        <button onClick={handleToggleUserForm} >
+                            {toggleUserLogin ? 'Need an account?' : 'Already have an account?'}
+                        </button>
+                    </div>
+                }
+                {currentUser.username ?
+                    <div >
+                        <h3>{currentUser.username}</h3>
+                    </div>
+                    :
+                    null
+                }
+            </div>
             <br/>
             <br/>
-            
+
             <Add handleCreate={handleCreate} businessKey={businessKey} />
 
             <div className="products">
