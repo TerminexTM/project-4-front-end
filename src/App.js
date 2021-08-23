@@ -241,7 +241,7 @@ const App = () => {
 
     return (
         <>
-            <h1>E-commerce Store</h1>
+            <h1>Ecom</h1>
             <div>
                 {toggleLogout ?
                     <button onClick={handleLogout} >Logout</button> :
@@ -324,26 +324,44 @@ const App = () => {
 
             <div className="products">
                 {(filter===filter && filter!=="all") && products.filter(products => products.business_name.includes(filter)).map((product) => {
-                    return (
-                        <div className="product" key={product.id}>
-                            <img src={product.image} />
-                            <h4>Name: {product.name}</h4>
-                            <h5>Description: {product.description}</h5>
-                            <h5>Category: {product.category}</h5>
-                            <h5>Business: {product.business_name}</h5>
-                            <h5>Business ID: {product.business_id}</h5>
-                            <h5>Price: {product.price}</h5>
-                            <button onClick={addShoppingCart} value={product.data}>Add to Cart</button>
-                            <Edit handleUpdate={handleUpdate} />
-                            {(currentBusiness.id === product.business_id) &&
-                                <button onClick={handleDelete} value={product.id}>
-                                    Delete
-                                </button>
-
-                            }
-
+                   return (
+                       <div
+                       className="product"
+                       key={product.id}
+                       id={product.id}
+                       >
+                       <div
+                       className="modalButton"
+                       onClick={(e)=>setProductModal(product.id)}>
+                           <img src={product.image} alt="404 bad link" />
+                           <h4>Name: {product.name}</h4>
+                           <h5>Price: ${product.price}</h5>
                         </div>
-                    )
+                        <Modal open={productModal===product.id} onClose={(e)=>setProductModal(false)}>
+                           <div className='product Modal'>
+                              <img src={product.image} />
+                              <h4>Name: {product.name}</h4>
+                              <h5>Description: {product.description}</h5>
+                              <h5>Category: {product.category}</h5>
+                              <h5>Business: {product.business_name}</h5>
+                              <h5>Business ID: {product.business_id}</h5>
+                              <h5>Price: ${product.price}</h5>
+                              <h4>Name: {product.name}</h4>
+                              <button onClick={addShoppingCart} value={product.data}>Add to Cart</button>
+                              {(currentBusiness.id===product.business_id) &&
+                              <div>
+                              <button onClick={handleDelete} value={product.id}>
+                                  Delete
+                              </button>
+                              <Edit handleUpdate={handleUpdate}/>
+                              </div>
+                              }
+                           </div>
+
+                        </Modal>
+
+                       </div>
+                   )
                 })}
                 {(filter==="all") && products.map( (product) => {
                    return (
@@ -352,28 +370,35 @@ const App = () => {
                        key={product.id}
                        id={product.id}
                        >
-                           <img src={product.image} />
+                       <div
+                       className="modalButton"
+                       onClick={(e)=>setProductModal(product.id)}>
+                           <img src={product.image} alt="404 bad link" />
                            <h4>Name: {product.name}</h4>
                            <h5>Price: ${product.price}</h5>
-                           <button onClick={addShoppingCart} value={product.data}>Add to Cart</button>
-                           <button onClick={(e)=>setProductModal(product.id)}>Show More</button>
-                           <Modal open={productModal===product.id} onClose={(e)=>setProductModal(false)}>
-                           <h4>Name: {product.name}</h4>
-                           <h5>Description: {product.description}</h5>
-                           <h5>Category: {product.category}</h5>
-                           <h5>Business: {product.business_name}</h5>
-                           <h5>Business ID: {product.business_id}</h5>
-                           <h5>Price: ${product.price}</h5>
-                           <h4>Name: {product.name}</h4>
-                           <img src={product.image} />
-                           <Edit handleUpdate={handleUpdate}/>
-                           </Modal>
-                           {(currentBusiness.id === product.business_id) &&
-                              <button onClick={handleDelete} value={product.id}>
-                                  Delete
-                              </button>
+                        </div>
+                        <Modal open={productModal===product.id} onClose={(e)=>setProductModal(false)}>
+                           <div className='product Modal'>
+                              <img src={product.image} />
+                              <h4>Name: {product.name}</h4>
+                              <h5>Description: {product.description}</h5>
+                              <h5>Category: {product.category}</h5>
+                              <h5>Business: {product.business_name}</h5>
+                              <h5>Business ID: {product.business_id}</h5>
+                              <h5>Price: ${product.price}</h5>
+                              <h4>Name: {product.name}</h4>
+                              <button onClick={addShoppingCart} value={product.data}>Add to Cart</button>
+                              {(currentBusiness.id===product.business_id) &&
+                              <Edit handleUpdate={handleUpdate}/>
+                              }
+                              {(currentBusiness.id === product.business_id) &&
+                                 <button onClick={handleDelete} value={product.id}>
+                                     Delete
+                                 </button>
+                              }
+                           </div>
 
-                           }
+                        </Modal>
 
                        </div>
                    )
