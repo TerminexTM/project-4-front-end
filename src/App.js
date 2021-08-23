@@ -198,9 +198,10 @@ const App = () => {
     }
 
     const addShoppingCart = (productObj) => {
-        setShoppingCart([ ...shoppingCart, productObj])
+        setShoppingCart([ ...shoppingCart, productObj.data])
 
     }
+    console.log(shoppingCart);
 
     const getProducts = () => {
         axios
@@ -295,9 +296,9 @@ const App = () => {
                 {shoppingCart.map((cartProduct) => {
                     return (
                         <div className="cartProduct">
-                            <img src={cartProduct.image} />
+                            {/* <img src={cartProduct.image} />
                             <h5>{cartProduct.name}</h5>
-                            <h5>{cartProduct.price}</h5>
+                            <h5>{cartProduct.price}</h5> */}
 
                         </div>
                     )
@@ -333,7 +334,7 @@ const App = () => {
                             <h5>Business: {product.business_name}</h5>
                             <h5>Business ID: {product.business_id}</h5>
                             <h5>Price: {product.price}</h5>
-                            <button onClick={addShoppingCart} value={product.data}>Add to Cart</button>
+                            <button onClick={addShoppingCart(product.id)}>Add to Cart</button>
                             <Edit handleUpdate={handleUpdate} />
                             {(currentBusiness.id === product.business_id) &&
                                 <button onClick={handleDelete} value={product.id}>
@@ -355,7 +356,8 @@ const App = () => {
                            <img src={product.image} />
                            <h4>Name: {product.name}</h4>
                            <h5>Price: ${product.price}</h5>
-                           <button onClick={addShoppingCart} value={product.data}>Add to Cart</button>
+
+                           <button onClick={addShoppingCart(product.id)}>Add to Cart</button>
                            <button onClick={(e)=>setProductModal(product.id)}>Show More</button>
                            <Modal open={productModal===product.id} onClose={(e)=>setProductModal(false)}>
                            <h4>Name: {product.name}</h4>
