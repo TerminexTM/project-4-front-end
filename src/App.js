@@ -334,7 +334,7 @@ const App = () => {
                             <h5>Business: {product.business_name}</h5>
                             <h5>Business ID: {product.business_id}</h5>
                             <h5>Price: {product.price}</h5>
-                            <button onClick={addShoppingCart(product.id)}>Add to Cart</button>
+                            {/* <button onClick={addShoppingCart(product.id)}>Add to Cart</button> */}
                             <Edit handleUpdate={handleUpdate} />
                             {(currentBusiness.id === product.business_id) &&
                                 <button onClick={handleDelete} value={product.id}>
@@ -353,7 +353,7 @@ const App = () => {
                        key={product.id}
                        id={product.id}
                        >
-                       <button onClick={addShoppingCart(product.id)}>Add to Cart</button>
+                       {/* <button onClick={addShoppingCart(product.id)}>Add to Cart</button> */}
                        <div
                        className="modalButton"
                        onClick={(e)=>setProductModal(product.id)}>
