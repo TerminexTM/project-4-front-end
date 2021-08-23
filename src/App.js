@@ -26,6 +26,7 @@ const App = () => {
     const [filter, setFilter] = useState('all')
 
     // User Login & Logout States
+    const [users, setUsers] = useState([])
     const [toggleUserLogin, setToggleUserLogin] = useState(true)
     const [toggleUserLogout, setToggleUserLogout] = useState(false)
     const [currentUser, setCurrentUser] = useState({})
@@ -38,6 +39,16 @@ const App = () => {
     const closeProductManager = () => {setOpenProductModal(false)}
     const openProduct = (id) => {setProductModal(id)}
     const closeProduct = () => {setProductModal(false)}
+
+    // shopping cart
+    const [shoppingCart, setShoppingCart] = useState([])
+    const [openShoppingCartModal, setOpenShoppingCartModal] = useState(false)
+    const [shoppingCartModal, setShoppingCartModal] = useState(false)
+    // Shopping Cart event handlers
+    const openShoppingCart = () => {setOpenShoppingCartModal(true)}
+    const closeShoppingCart = () => {setOpenShoppingCartModal(false)}
+
+
 
     let businessKey = {...currentBusiness}
     console.log(businessKey);
@@ -98,6 +109,7 @@ const App = () => {
                     setErrorMessage('')
                     setCurrentUser(response.data)
                     handleToggleUserLogout()
+                    getUser()
                 } else {
                     setErrorMessage(response.data)
                     setToggleError(true)
@@ -115,6 +127,7 @@ const App = () => {
                     setErrorMessage('')
                     setCurrentBusiness(response.data)
                     handleToggleLogout()
+                    getBusiness()
                 } else {
                     setToggleError(true)
                     setErrorMessage(response.data)
@@ -147,13 +160,14 @@ const App = () => {
     // ============== User Login and Logout Handles ============== //
     const handleUserLogin = (userObj) => {
         axios
-            .put('https://project-four-backend.herokuapp.com/api/users', userObj)
+            .put('https://project-four-backend.herokuapp.com/api/users/login', userObj)
             .then((response) => {
                 if (response.data.name) {
                     setToggleError(false)
                     setErrorMessage('')
                     setCurrentUser(response.data)
                     handleToggleUserLogout()
+                    getUser()
                 } else {
                     setToggleError(true)
                     setErrorMessage(response.data)
@@ -183,6 +197,11 @@ const App = () => {
         }
     }
 
+    const addShoppingCart = (productObj) => {
+        // setShoppingCart([ ...shoppingCart, productObj.data])
+        setShoppingCart([ ...shoppingCart,  ])
+    }
+
     const getProducts = () => {
         axios
             .get('https://project-four-backend.herokuapp.com/api/products')
@@ -203,12 +222,21 @@ const App = () => {
          .catch((error) => console.error(error))
    }
 
+   const getUser = (addUser) => {
+       axios
+        .get('https://project-four-backend.herokuapp.com/api/users')
+        .then(
+            (response) => setUsers(response.data),
+            (error) => console.error(error)
+        )
+        .catch((error) => console.error(error))
+   }
 
     useEffect(() => {
         getProducts()
         getBusiness()
+        getUser()
     }, [])
-
 
 
     return (
@@ -261,6 +289,22 @@ const App = () => {
             </div>
             <br/>
             <br/>
+            <button onClick={openShoppingCart}>Shopping Cart</button>
+            <Modal open={openShoppingCartModal} onClose={closeShoppingCart}>
+                <h4>Shopping Cart</h4>
+                {shoppingCart.map((cartProduct) => {
+                    return (
+                        <div className="cartProduct">
+                            <img src={cartProduct.image} />
+                            <h5>{cartProduct.name}</h5>
+                            <h5>{cartProduct.price}</h5>
+
+                        </div>
+                    )
+                })}
+            </Modal>
+            <br/>
+            <br/>
             <button onClick={openProductManager}>Add Product</button>
             <Modal open={openProductModal} onClose={closeProductManager}>
                <Add handleCreate={handleCreate} businessKey={businessKey} />
@@ -289,6 +333,7 @@ const App = () => {
                             <h5>Business: {product.business_name}</h5>
                             <h5>Business ID: {product.business_id}</h5>
                             <h5>Price: {product.price}</h5>
+                            <button onClick={addShoppingCart} value={product.data}>Add to Cart</button>
                             <Edit handleUpdate={handleUpdate} />
                             {(currentBusiness.id === product.business_id) &&
                                 <button onClick={handleDelete} value={product.id}>
@@ -310,6 +355,7 @@ const App = () => {
                            <img src={product.image} />
                            <h4>Name: {product.name}</h4>
                            <h5>Price: ${product.price}</h5>
+                           <button onClick={addShoppingCart} value={product.data}>Add to Cart</button>
                            <button onClick={(e)=>setProductModal(product.id)}>Show More</button>
                            <Modal open={productModal===product.id} onClose={(e)=>setProductModal(false)}>
                            <h4>Name: {product.name}</h4>
