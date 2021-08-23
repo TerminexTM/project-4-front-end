@@ -162,7 +162,7 @@ const App = () => {
         axios
             .put('https://project-four-backend.herokuapp.com/api/users/login', userObj)
             .then((response) => {
-                if (response.data.name) {
+                if (response.data.username) {
                     setToggleError(false)
                     setErrorMessage('')
                     setCurrentUser(response.data)
@@ -198,7 +198,7 @@ const App = () => {
     }
 
     const addShoppingCart = (productObj) => {
-        setShoppingCart([ ...shoppingCart, productObj.data])
+        setShoppingCart([ ...shoppingCart, productObj])
 
     }
 
