@@ -198,8 +198,8 @@ const App = () => {
     }
 
     const addShoppingCart = (productObj) => {
-        // setShoppingCart([ ...shoppingCart, productObj.data])
-        setShoppingCart([ ...shoppingCart,  ])
+        setShoppingCart([ ...shoppingCart, productObj.data])
+
     }
 
     const getProducts = () => {
