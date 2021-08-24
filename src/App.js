@@ -48,6 +48,7 @@ const App = () => {
     // Shopping Cart event handlers
     const openShoppingCart = () => {setOpenShoppingCartModal(true)}
     const closeShoppingCart = () => {setOpenShoppingCartModal(false)}
+    let cartTotal = 0
 
 
 
@@ -206,9 +207,10 @@ const App = () => {
     }
     console.log(shoppingCart);
 
-    // const removeProduct = (event) => {
-    //     const deleteItem = shoppingCart.filter(shoppingCart) => event.target.value !== event.target.value;
-    // }
+
+    const removeProduct = (event) => {
+        // const deleteItem = shoppingCart.filter(shoppingCart) => event.target.value !== event.target.value
+    }
 
     const getProducts = () => {
         axios
@@ -309,9 +311,12 @@ const App = () => {
                             <h5>{cartProduct.name}</h5>
                             <h5>{cartProduct.price}</h5>
                             {console.log(shoppingCart.indexOf(cartProduct))}
+                            {cartTotal += cartProduct.price}
                         </div>
                     )
                 })}
+                <h5>Total Amount: ${cartTotal}</h5>
+                <button onClick={(e) => {setShoppingCart([])}}>Buy</button>
             </Modal>
             <br/>
             <br/>
@@ -385,9 +390,11 @@ const App = () => {
                               <h5>Business ID: {product.business_id}</h5>
                               <h5>Price: ${product.price}</h5>
                               <h4>Name: {product.name}</h4>
+
                               {currentUser.username &&
                                  <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
                               }
+
                               {(currentBusiness.id===product.business_id) &&
                               <div>
                               <button onClick={handleDelete} value={product.id}>
