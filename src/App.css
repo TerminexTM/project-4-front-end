@@ -66,11 +66,12 @@ img {
    align-self: center;
 }
 .customOverlay {
-    background: rgba(100, 100, 100, 0.7);
+    background: rgba(100, 100, 100, 0.5);
 }
 .customModal {
-    background: gray;
-
+    background: white;
+    width: 40%;
+    text-align: center;
 }
 .middleContent {
    display: flex;
@@ -95,4 +96,7 @@ form > .headButton {
 }
 .middleContent > button {
    background-color: #49abbd;
+}
+.cartItemImage {
+    width: 60%;
 }
