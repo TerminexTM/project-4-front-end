@@ -62,6 +62,9 @@ img {
    border: 2px solid black;
    margin-top: 5px;
 }
+.product:hover {
+   cursor: pointer;
+}
 .loggedIn {
    align-self: center;
 }
@@ -84,6 +87,9 @@ img {
    align-self: center;
    margin: 0;
    padding-top: 5px;
+}
+select:hover {
+   cursor: pointer;
 }
 .headContainer > .button {
    background-color: #fdcc3f;
