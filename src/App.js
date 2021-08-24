@@ -312,6 +312,7 @@ const App = () => {
                     )
                 })}
                 <h5>Total Amount: ${cartTotal}</h5>
+                <button onClick={(e) => {setShoppingCart([])}}>Buy</button>
             </Modal>
             <br/>
             <br/>
@@ -381,7 +382,7 @@ const App = () => {
                               <h5>Business ID: {product.business_id}</h5>
                               <h5>Price: ${product.price}</h5>
                               <h4>Name: {product.name}</h4>
-                              <button onClick={addShoppingCart} value={product.data}>Add to Cart</button>
+                              <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
                               {(currentBusiness.id===product.business_id) &&
                               <div>
                               <button onClick={handleDelete} value={product.id}>
@@ -396,47 +397,6 @@ const App = () => {
 
                        </div>
                    )
-                })}
-                {(filter==="all") && products.map( (product) => {
-                   return (
-                       <div
-                       className="product"
-                       key={product.id}
-                       id={product.id}
-                       >
-                       <div
-                       className="modalButton"
-                       onClick={(e)=>setProductModal(product.id)}>
-                           <img src={product.image} alt="404 bad link" />
-                           <h4>Name: {product.name}</h4>
-                           <h5>Price: ${product.price}</h5>
-                        </div>
-                        <Modal open={productModal===product.id} onClose={(e)=>setProductModal(false)}>
-                           <div className='product Modal'>
-                              <img src={product.image} />
-                              <h4>Name: {product.name}</h4>
-                              <h5>Description: {product.description}</h5>
-                              <h5>Category: {product.category}</h5>
-                              <h5>Business: {product.business_name}</h5>
-                              <h5>Business ID: {product.business_id}</h5>
-                              <h5>Price: ${product.price}</h5>
-                              <h4>Name: {product.name}</h4>
-                              <button onClick={addShoppingCart} value={product.data}>Add to Cart</button>
-                              {(currentBusiness.id===product.business_id) &&
-                              <Edit handleUpdate={handleUpdate}/>
-                              }
-                              {(currentBusiness.id === product.business_id) &&
-                                 <button onClick={handleDelete} value={product.id}>
-                                     Delete
-                                 </button>
-                              }
-                           </div>
-
-                        </Modal>
-
-                       </div>
-                   )
-
                 })}
             </div>
         </>
