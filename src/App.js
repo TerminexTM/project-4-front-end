@@ -342,13 +342,13 @@ const App = () => {
             >
                 <h4>Shopping Cart</h4>
                 {shoppingCart.map((cartProduct) => {
+                   cartTotal += cartProduct.price
                     return (
                         <div className="cartProduct" id={shoppingCart.indexOf(cartProduct)} >
                             <img src={cartProduct.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}} className="cartItemImage"/>
                             <h5>{cartProduct.name}</h5>
-                            <h5>{cartProduct.price}</h5>
+                            <h5>${cartProduct.price}</h5>
 
-                            <h1 display="hidden">{cartTotal += cartProduct.price}</h1>
 
                             <button onClick={()=>handleRemovalFromCart(shoppingCart.indexOf(cartProduct))}>Remove</button>
 
