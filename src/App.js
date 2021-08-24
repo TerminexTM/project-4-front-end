@@ -159,7 +159,18 @@ const App = () => {
             setToggleLogout(true)
         }
     }
+    const handleRemovalFromCart = (id) => {
+      let cart = shoppingCart
+      let cartItem = cart.indexOf(id)
+      cart.splice(cartItem, 1)
+      setShoppingCart(cart)
+      closeShoppingCart()
+      setTimeout(function() {openShoppingCart();}, 0)
 
+   }
+   const refreshCart = () => {
+      setShoppingCart(shoppingCart)
+   }
     // ============== User Login and Logout Handles ============== //
     const handleUserLogin = (userObj) => {
         axios
@@ -207,11 +218,6 @@ const App = () => {
     }
     console.log(shoppingCart);
 
-
-    const removeProduct = (event) => {
-        // const deleteItem = shoppingCart.filter(shoppingCart) => event.target.value !== event.target.value
-    }
-
     const getProducts = () => {
         axios
             .get('https://project-four-backend.herokuapp.com/api/products')
@@ -246,6 +252,7 @@ const App = () => {
         getProducts()
         getBusiness()
         getUser()
+        refreshCart()
     }, [])
 
 
@@ -311,7 +318,11 @@ const App = () => {
                             <h5>{cartProduct.name}</h5>
                             <h5>{cartProduct.price}</h5>
                             {console.log(shoppingCart.indexOf(cartProduct))}
+
+                            <button onClick={()=>handleRemovalFromCart(shoppingCart.id)}>Remove</button>
+
                             {cartTotal += cartProduct.price}
+
                         </div>
                     )
                 })}
@@ -382,7 +393,7 @@ const App = () => {
                         </div>
                         <Modal open={productModal===product.id} onClose={(e)=>setProductModal(false)}>
                            <div className='product Modal'>
-                              <img src={product.image} />
+                              <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}} />
                               <h4>Name: {product.name}</h4>
                               <h5>Description: {product.description}</h5>
                               <h5>Category: {product.category}</h5>
