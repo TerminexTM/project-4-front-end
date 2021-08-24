@@ -54,8 +54,8 @@ img {
 .products {
    display: flex;
    flex-wrap: wrap;
-   align-content: space-between;
-   justify-content: space-between;
+   align-content: space-around;
+   justify-content: space-around;
 }
 .product {
    width: 29rem;
