@@ -62,6 +62,7 @@ const App = () => {
             .then((response) => {
                 console.log(response)
                 getProducts()
+                setOpenProductModal(false)
             })
     }
 
@@ -238,12 +239,20 @@ const App = () => {
         .catch((error) => console.error(error))
    }
 
-   const handleRemovalFromCart = (id) => {
+   const handleRemovalFromCart = (idRemove) => {
          let cart = shoppingCart
-         let cartItem = cart.indexOf(id)
-         cart.splice(cartItem, 1)
+         // let cartItem = cart.indexOf(id)
+         cart.splice(idRemove, 1)
+         //
+         // for(let i=0;i<cart.length;i++){
+         //    if(cart[i].id = idRemove){
+         //       cart.splice(i, 1);
+         //       console.log(cart);
+         //    }
+         // }
          setShoppingCart(cart)
          closeShoppingCart()
+         // console.log(cartItem);
          setTimeout(function() {openShoppingCart();}, 0)
 
       }
@@ -338,11 +347,10 @@ const App = () => {
                             <img src={cartProduct.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}} className="cartItemImage"/>
                             <h5>{cartProduct.name}</h5>
                             <h5>{cartProduct.price}</h5>
-                            {console.log(shoppingCart.indexOf(cartProduct))}
 
-                            {cartTotal += cartProduct.price}
+                            <h1 display="hidden">{cartTotal += cartProduct.price}</h1>
 
-                            <button onClick={()=>handleRemovalFromCart(shoppingCart.id)}>Remove</button>
+                            <button onClick={()=>handleRemovalFromCart(shoppingCart.indexOf(cartProduct))}>Remove</button>
 
                         </div>
                     )
@@ -395,8 +403,8 @@ const App = () => {
                        className="modalButton"
                        onClick={(e)=>setProductModal(product.id)}>
                            <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}} />
-                           <h4>Name: {product.name}</h4>
-                           <h5>Price: ${product.price}</h5>
+                           <h4>{product.name}</h4>
+                           <h5>${product.price}</h5>
                         </div>
                         {currentUser.username &&
                         <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
@@ -407,12 +415,11 @@ const App = () => {
                         }}>
                            <div className='productModal'>
                               <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}}/>
-                              <h4>Name: {product.name}</h4>
-                              <h5>Description: {product.description}</h5>
+                              <h4>{product.name}</h4>
+                              <h5>{product.description}</h5>
                               <h5>Category: {product.category}</h5>
-                              <h5>Business: {product.business_name}</h5>
-                              <h5>Business ID: {product.business_id}</h5>
-                              <h5>Price: ${product.price}</h5>
+                              <h5>Company: {product.business_name}</h5>
+                              <h5>${product.price}</h5>
                               {currentUser.username &&
                                  <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
                               }
