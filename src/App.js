@@ -107,7 +107,7 @@ const App = () => {
         axios
             .post('https://project-four-backend.herokuapp.com/api/users', userObj)
             .then((response) => {
-                if(response.data.name) {
+                if(response.data.username) {
                     setToggleError(false)
                     setErrorMessage('')
                     setCurrentUser(response.data)
