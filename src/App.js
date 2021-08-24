@@ -70,6 +70,7 @@ const App = () => {
             .put('https://project-four-backend.herokuapp.com/api/products/' + editProduct.id, editProduct)
             .then((response) => {
                 getProducts()
+                setProductModal(false)
             })
 
     }
@@ -269,7 +270,7 @@ const App = () => {
                   null
                }
                 {toggleLogout ?
-                    <button onClick={handleLogout} >Logout</button> :
+                    <button className ="headButton" onClick={handleLogout} >Logout</button> :
                     <div >
                         {toggleLogin ?
                             <LoginForm handleLogin={handleLogin} toggleError={toggleError} errorMessage={errorMessage} />
@@ -372,7 +373,7 @@ const App = () => {
                             {currentUser.username &&
                             <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
                            }
-                            <Edit handleUpdate={handleUpdate} />
+                            <Edit handleUpdate={handleUpdate} product={product}/>
                             {(currentBusiness.id === product.business_id) &&
                                 <button onClick={handleDelete} value={product.id}>
                                     Delete
@@ -420,7 +421,7 @@ const App = () => {
                               <button onClick={handleDelete} value={product.id}>
                                   Delete
                               </button>
-                              <Edit handleUpdate={handleUpdate}/>
+                              <Edit handleUpdate={handleUpdate} product={product}/>
                               </div>
                               }
                            </div>

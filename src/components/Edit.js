@@ -23,7 +23,7 @@ const Edit = (props) => {
                     <input type="text" name="name" value={product.name} onChange={handleChange} />
                     <br/>
                     <label htmlFor="image"> Image: </label>
-                    <input type="text" name="image" value={product.image} onChange={handleChange} />
+                    <input type="text" name="image" value={product.image} onChange={handleChange}/>
                     <br/>
                     <label htmlFor="description">Description: </label>
                     <input type="text" name="description" value={product.description} onChange={handleChange} />
