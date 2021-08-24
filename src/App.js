@@ -336,7 +336,7 @@ const App = () => {
                         <div className="cartProduct" id={shoppingCart.indexOf(cartProduct)} >
                             <img src={cartProduct.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}} className="cartItemImage"/>
                             <h5>{cartProduct.name}</h5>
-                            <h5>{cartProduct.price}</h5>
+                            <h5>${cartProduct.price}</h5>
                             {console.log(shoppingCart.indexOf(cartProduct))}
 
                             {cartTotal += cartProduct.price}
