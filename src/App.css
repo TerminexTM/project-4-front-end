@@ -76,6 +76,10 @@ img {
     width: 40%;
     text-align: center;
 }
+.productModalImg{
+   width: 55%;
+   border: 1px solid black;
+}
 .middleContent {
    display: flex;
    justify-content: space-around;
