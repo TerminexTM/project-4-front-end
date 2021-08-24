@@ -40,6 +40,7 @@ const App = () => {
     const openProduct = (id) => {setProductModal(id)}
     const closeProduct = () => {setProductModal(false)}
 
+    let emptyCart = { name: '', image: '', description: '', price: 0, category: 'clothing', business_name: '', business_id: '' }
     // shopping cart
     const [shoppingCart, setShoppingCart] = useState([])
     const [openShoppingCartModal, setOpenShoppingCartModal] = useState(false)
@@ -52,6 +53,7 @@ const App = () => {
 
     let businessKey = {...currentBusiness}
     console.log(businessKey);
+
 
     // ============== Products Handles ============== //
     const handleCreate = (addProduct) => {
@@ -162,7 +164,7 @@ const App = () => {
         axios
             .put('https://project-four-backend.herokuapp.com/api/users/login', userObj)
             .then((response) => {
-                if (response.data.name) {
+                if (response.data.username) {
                     setToggleError(false)
                     setErrorMessage('')
                     setCurrentUser(response.data)
@@ -198,8 +200,13 @@ const App = () => {
     }
 
     const addShoppingCart = (productObj) => {
-        // setShoppingCart([ ...shoppingCart, productObj.data])
-        setShoppingCart([ ...shoppingCart,  ])
+        setShoppingCart([ ...shoppingCart, productObj.data])
+
+    }
+    console.log(shoppingCart);
+
+    const removeProduct = (event) => {
+        const deleteItem = shoppingCart.filter(shoppingCart) => event.target.value !== event.target.value
     }
 
     const getProducts = () => {
@@ -294,11 +301,11 @@ const App = () => {
                 <h4>Shopping Cart</h4>
                 {shoppingCart.map((cartProduct) => {
                     return (
-                        <div className="cartProduct">
+                        <div className="cartProduct" id={shoppingCart.indexOf(cartProduct)} >
                             <img src={cartProduct.image} />
                             <h5>{cartProduct.name}</h5>
                             <h5>{cartProduct.price}</h5>
-
+                            {console.log(shoppingCart.indexOf(cartProduct))}
                         </div>
                     )
                 })}
@@ -324,12 +331,36 @@ const App = () => {
 
             <div className="products">
                 {(filter===filter && filter!=="all") && products.filter(products => products.business_name.includes(filter)).map((product) => {
+                    return (
+                        <div className="product" key={product.id}>
+                            <img src={product.image} />
+                            <h4>Name: {product.name}</h4>
+                            <h5>Description: {product.description}</h5>
+                            <h5>Category: {product.category}</h5>
+                            <h5>Business: {product.business_name}</h5>
+                            <h5>Business ID: {product.business_id}</h5>
+                            <h5>Price: {product.price}</h5>
+                            <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
+                            <Edit handleUpdate={handleUpdate} />
+                            {(currentBusiness.id === product.business_id) &&
+                                <button onClick={handleDelete} value={product.id}>
+                                    Delete
+                                </button>
+
+                            }
+
+                        </div>
+                    )
+                })}
+                {(filter==="all") && products.map( (product) => {
                    return (
                        <div
                        className="product"
                        key={product.id}
                        id={product.id}
                        >
+                       <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
+                       {console.log(product)}
                        <div
                        className="modalButton"
                        onClick={(e)=>setProductModal(product.id)}>
