@@ -277,7 +277,7 @@ const App = () => {
                             <NewBusinessForm
                              handleCreateBusinessAuth={handleCreateBusinessAuth} toggleError={toggleError} errorMessage={errorMessage} />
                         }
-                        <button onClick={handleToggleForm} >
+                        <button onClick={handleToggleForm} className="headButton">
                             {toggleLogin ? 'Need an account?' : 'Already have an account?'}
                         </button>
                     </div>
@@ -292,14 +292,14 @@ const App = () => {
                   null
                }
                 {toggleUserLogout ?
-                    <button onClick={handleUserLogout} >Logout</button> :
+                    <button onClick={handleUserLogout} className="headButton">Logout</button> :
                     <div >
                         {toggleUserLogin ?
                             <UserLoginForm handleUserLogin={handleUserLogin} toggleError={toggleError} errorMessage={errorMessage} />
                             :
                             <NewUserForm handleCreateUserAuth={handleCreateUserAuth} toggleError={toggleError} errorMessage={errorMessage} />
                         }
-                        <button onClick={handleToggleUserForm} >
+                        <button onClick={handleToggleUserForm} className="headButton" >
                             {toggleUserLogin ? 'Need an account?' : 'Already have an account?'}
                         </button>
                     </div>

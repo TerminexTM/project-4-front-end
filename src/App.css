@@ -76,11 +76,23 @@ img {
    display: flex;
    justify-content: space-around;
    align-items: center;
-   background-color: brown;
+   background-color: #257f8e;
    margin: 0;
 }
 .filter {
    align-self: center;
    margin: 0;
    padding-top: 5px;
+}
+.headContainer > .button {
+   background-color: #fdcc3f;
+}
+.headButton {
+   background-color: #fdcc3f;
+}
+form > .headButton {
+   background-color: #fdcc3f;
+}
+.middleContent > button {
+   background-color: #49abbd;
 }

@@ -28,7 +28,7 @@ const NewBusinessForm = (props) => {
                 <input type='text' name="name" placeholder='Name' onChange={handleChange} />
                 <label htmlFor="password"></label>
                 <input type='password' name="password" placeholder='Password' onChange={handleChange} />
-                <input type='submit' value='Register'  />
+                <input type='submit' value='Register' className="headButton"  />
             </form>
         </div>
     )
