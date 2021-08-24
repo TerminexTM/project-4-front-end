@@ -64,9 +64,9 @@ img {
    align-self: center;
 }
 .customOverlay {
-    background: rgba(100, 100, 100, 0.7);
+    background: rgba(100, 100, 100, 0.5);
 }
 .customModal {
-    background: gray;
+    background: white;
 
 }
