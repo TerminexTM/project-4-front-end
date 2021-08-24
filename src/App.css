@@ -36,11 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
 .headContainer {
    padding-top: 20px;
    display: flex;
    justify-content: space-around;
    background-color: #987615;
+   margin: 0;
 }
 .headContainer > h1 {
    align-self: center;
@@ -69,4 +71,28 @@ img {
 .customModal {
     background: white;
 
+}
+.middleContent {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   background-color: #257f8e;
+   margin: 0;
+}
+.filter {
+   align-self: center;
+   margin: 0;
+   padding-top: 5px;
+}
+.headContainer > .button {
+   background-color: #fdcc3f;
+}
+.headButton {
+   background-color: #fdcc3f;
+}
+form > .headButton {
+   background-color: #fdcc3f;
+}
+.middleContent > button {
+   background-color: #49abbd;
 }

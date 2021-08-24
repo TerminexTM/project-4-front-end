@@ -277,7 +277,7 @@ const App = () => {
                             <NewBusinessForm
                              handleCreateBusinessAuth={handleCreateBusinessAuth} toggleError={toggleError} errorMessage={errorMessage} />
                         }
-                        <button onClick={handleToggleForm} >
+                        <button onClick={handleToggleForm} className="headButton">
                             {toggleLogin ? 'Need an account?' : 'Already have an account?'}
                         </button>
                     </div>
@@ -292,23 +292,34 @@ const App = () => {
                   null
                }
                 {toggleUserLogout ?
-                    <button onClick={handleUserLogout} >Logout</button> :
+                    <button onClick={handleUserLogout} className="headButton">Logout</button> :
                     <div >
                         {toggleUserLogin ?
                             <UserLoginForm handleUserLogin={handleUserLogin} toggleError={toggleError} errorMessage={errorMessage} />
                             :
                             <NewUserForm handleCreateUserAuth={handleCreateUserAuth} toggleError={toggleError} errorMessage={errorMessage} />
                         }
-                        <button onClick={handleToggleUserForm} >
+                        <button onClick={handleToggleUserForm} className="headButton" >
                             {toggleUserLogin ? 'Need an account?' : 'Already have an account?'}
                         </button>
                     </div>
                 }
             </div>
          </div>
-            <br/>
-            <br/>
-            <button onClick={openShoppingCart}>Shopping Cart</button>
+            <div className="middleContent">
+               <button onClick={openShoppingCart}>Shopping Cart</button>
+               <button onClick={openProductManager}>Add Product</button>
+               <fieldset className="filter">
+                  <select onChange={(e)=>{setFilter(e.target.value)}}>
+                     <option value="all">all</option>
+                     {businesses.map( (business)=> {
+                        return (
+                           <option value={business.name}>{business.name}</option>
+                        )
+                     })}
+               </select>
+               </fieldset>
+            </div>
             <Modal open={openShoppingCartModal} onClose={closeShoppingCart}
             classNames={{
                 overlay: 'customOverlay',
@@ -334,26 +345,13 @@ const App = () => {
                 <h5>Total Amount: ${cartTotal}</h5>
                 <button onClick={(e) => {setShoppingCart([])}}>Buy</button>
             </Modal>
-            <br/>
-            <br/>
-            <button onClick={openProductManager}>Add Product</button>
             <Modal open={openProductModal} onClose={closeProductManager} classNames={{
                 overlay: 'customOverlay',
                 modal: 'customModal',
             }} >
                <Add handleCreate={handleCreate} businessKey={businessKey} />
             </Modal>
-            <fieldset className="filter">
-               <legend>Filter: </legend>
-               <select onChange={(e)=>{setFilter(e.target.value)}}>
-                  <option value="all">all</option>
-                  {businesses.map( (business)=> {
-                     return (
-                        <option value={business.name}>{business.name}</option>
-                     )
-                  })}
-               </select>
-            </fieldset>
+
 
 
             <div className="products">

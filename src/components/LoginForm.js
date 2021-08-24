@@ -28,7 +28,7 @@ const LoginForm = (props) => {
                 <input type='text'  name="name" placeholder='Username'  onChange={handleChange} />
                 <label htmlFor="password"></label>
                 <input type='password' name="password" placeholder='Password' onChange={handleChange} />
-                <input type="submit" value='Login'  />
+                <input type="submit" value='Login' className="headButton" />
             </form>
         </div>
     )
