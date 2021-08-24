@@ -22,7 +22,7 @@ const NewUserForm = (props) => {
                 <input type='text' name="username" placeholder='Username' onChange={handleChange} />
                 <label htmlFor="password"></label>
                 <input type='password' name="password" placeholder='Password' onChange={handleChange} />
-                <input type='submit' value='Register'  />
+                <input type='submit' value='Register' className="headButton"  />
             </form>
         </div>
     )
