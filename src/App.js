@@ -48,7 +48,6 @@ const App = () => {
     // Shopping Cart event handlers
     const openShoppingCart = () => {setOpenShoppingCartModal(true)}
     const closeShoppingCart = () => {setOpenShoppingCartModal(false)}
-    let cartTotal = 0
 
 
 
@@ -208,10 +207,6 @@ const App = () => {
     console.log(shoppingCart);
 
 
-    const removeProduct = (event) => {
-        // const deleteItem = shoppingCart.filter(shoppingCart) => event.target.value !== event.target.value
-    }
-
     const getProducts = () => {
         axios
             .get('https://project-four-backend.herokuapp.com/api/products')
@@ -312,16 +307,18 @@ const App = () => {
                 {shoppingCart.map((cartProduct) => {
                     return (
                         <div className="cartProduct" id={shoppingCart.indexOf(cartProduct)} >
-                            <img src={cartProduct.image} />
+                            <img src={cartProduct.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}}/>
                             <h5>{cartProduct.name}</h5>
                             <h5>{cartProduct.price}</h5>
                             {console.log(shoppingCart.indexOf(cartProduct))}
+
                             {cartTotal += cartProduct.price}
+
+                            <button onClick={()=>handleRemovalFromCart(shoppingCart.id)}>Remove</button>
+
                         </div>
                     )
                 })}
-                <h5>Total Amount: ${cartTotal}</h5>
-                <button onClick={(e) => {setShoppingCart([])}}>Buy</button>
             </Modal>
             <br/>
             <br/>
@@ -401,11 +398,9 @@ const App = () => {
                               <h5>Business ID: {product.business_id}</h5>
                               <h5>Price: ${product.price}</h5>
                               <h4>Name: {product.name}</h4>
-
                               {currentUser.username &&
                                  <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
                               }
-
                               {(currentBusiness.id===product.business_id) &&
                               <div>
                               <button onClick={handleDelete} value={product.id}>

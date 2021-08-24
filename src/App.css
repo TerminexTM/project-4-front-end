@@ -50,7 +50,6 @@ img {
    height: 25rem;
 }
 .products {
-   border: 2px solid black;
    display: flex;
    flex-wrap: wrap;
    align-content: space-between;
