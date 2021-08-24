@@ -269,7 +269,7 @@ const App = () => {
     return (
         <>
         <div className="headContainer">
-            <h1>Ecom:<h4>A Shop App</h4></h1>
+            <h1>Ecom<i class="fas fa-tags"></i><h4>A Shop App</h4></h1>
             <div className="loggedIn">
                {currentBusiness.name ?
                   <div >

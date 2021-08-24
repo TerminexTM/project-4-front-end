@@ -54,11 +54,11 @@ img {
 .products {
    display: flex;
    flex-wrap: wrap;
-   align-content: space-between;
-   justify-content: space-between;
+   align-content: space-around;
+   justify-content: space-around;
 }
 .product {
-   width: 30%;
+   width: 29rem;
    border: 2px solid black;
    margin-top: 5px;
 }
