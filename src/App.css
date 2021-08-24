@@ -36,9 +36,31 @@
     transform: rotate(360deg);
   }
 }
-img {
-   width: 30%;
+.headContainer {
+   padding-top: 20px;
+   display: flex;
+   justify-content: space-around;
+   background-color: #987615;
 }
-Modal {
-   text-align: center;
+.headContainer > h1 {
+   align-self: center;
+}
+img {
+   width: 100%;
+   height: 25rem;
+}
+.products {
+   border: 2px solid black;
+   display: flex;
+   flex-wrap: wrap;
+   align-content: space-between;
+   justify-content: space-between;
+}
+.product {
+   width: 30%;
+   border: 2px solid black;
+   margin-top: 5px;
+}
+.loggedIn {
+   align-self: center;
 }

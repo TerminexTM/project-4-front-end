@@ -180,6 +180,7 @@ const App = () => {
 
     const handleUserLogout = () => {
         setCurrentUser({})
+        setShoppingCart([])
         handleToggleUserLogout()
     }
 
@@ -205,6 +206,7 @@ const App = () => {
 
     }
     console.log(shoppingCart);
+
 
     const removeProduct = (event) => {
         // const deleteItem = shoppingCart.filter(shoppingCart) => event.target.value !== event.target.value
@@ -249,8 +251,16 @@ const App = () => {
 
     return (
         <>
-            <h1>Ecom</h1>
-            <div>
+        <div className="headContainer">
+            <h1>Ecom:<h4>A Shop App</h4></h1>
+            <div className="loggedIn">
+               {currentBusiness.name ?
+                  <div >
+                       <h3>{currentBusiness.name}</h3>
+                  </div>
+                  :
+                  null
+               }
                 {toggleLogout ?
                     <button onClick={handleLogout} >Logout</button> :
                     <div >
@@ -265,15 +275,15 @@ const App = () => {
                         </button>
                     </div>
                 }
-                {currentBusiness.name ?
-                    <div >
-                        <h3>{currentBusiness.name}</h3>
-                    </div>
-                    :
-                    null
-                }
             </div>
-            <div>
+            <div className="loggedIn">
+               {currentUser.username ?
+                  <div >
+                       <h3>{currentUser.username}</h3>
+                  </div>
+                  :
+                  null
+               }
                 {toggleUserLogout ?
                     <button onClick={handleUserLogout} >Logout</button> :
                     <div >
@@ -287,14 +297,8 @@ const App = () => {
                         </button>
                     </div>
                 }
-                {currentUser.username ?
-                    <div >
-                        <h3>{currentUser.username}</h3>
-                    </div>
-                    :
-                    null
-                }
             </div>
+         </div>
             <br/>
             <br/>
             <button onClick={openShoppingCart}>Shopping Cart</button>
@@ -337,14 +341,16 @@ const App = () => {
                 {(filter===filter && filter!=="all") && products.filter(products => products.business_name.includes(filter)).map((product) => {
                     return (
                         <div className="product" key={product.id}>
-                            <img src={product.image} />
+                            <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}} />
                             <h4>Name: {product.name}</h4>
                             <h5>Description: {product.description}</h5>
                             <h5>Category: {product.category}</h5>
                             <h5>Business: {product.business_name}</h5>
                             <h5>Business ID: {product.business_id}</h5>
                             <h5>Price: {product.price}</h5>
+                            {currentUser.username &&
                             <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
+                           }
                             <Edit handleUpdate={handleUpdate} />
                             {(currentBusiness.id === product.business_id) &&
                                 <button onClick={handleDelete} value={product.id}>
@@ -363,12 +369,14 @@ const App = () => {
                        key={product.id}
                        id={product.id}
                        >
+                       {currentUser.username &&
                        <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
+                       }
                        {console.log(product)}
                        <div
                        className="modalButton"
                        onClick={(e)=>setProductModal(product.id)}>
-                           <img src={product.image} alt="404 bad link" />
+                           <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}} />
                            <h4>Name: {product.name}</h4>
                            <h5>Price: ${product.price}</h5>
                         </div>
@@ -382,7 +390,11 @@ const App = () => {
                               <h5>Business ID: {product.business_id}</h5>
                               <h5>Price: ${product.price}</h5>
                               <h4>Name: {product.name}</h4>
-                              <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
+
+                              {currentUser.username &&
+                                 <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
+                              }
+
                               {(currentBusiness.id===product.business_id) &&
                               <div>
                               <button onClick={handleDelete} value={product.id}>
@@ -398,6 +410,7 @@ const App = () => {
                        </div>
                    )
                 })}
+
             </div>
         </>
     )
