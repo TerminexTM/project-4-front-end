@@ -307,8 +307,12 @@ const App = () => {
             </div>
          </div>
             <div className="middleContent">
+               {currentUser.username &&
                <button onClick={openShoppingCart}>Shopping Cart</button>
+               }
+               {currentBusiness.name &&
                <button onClick={openProductManager}>Add Product</button>
+               }
                <fieldset className="filter">
                   <select onChange={(e)=>{setFilter(e.target.value)}}>
                      <option value="all">all</option>
