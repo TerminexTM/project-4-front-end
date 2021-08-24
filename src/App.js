@@ -49,7 +49,7 @@ const App = () => {
     const openShoppingCart = () => {setOpenShoppingCartModal(true)}
     const closeShoppingCart = () => {setOpenShoppingCartModal(false)}
 
-
+    let cartTotal = 0;
 
     let businessKey = {...currentBusiness}
     console.log(businessKey);
@@ -237,6 +237,18 @@ const App = () => {
         .catch((error) => console.error(error))
    }
 
+   const handleRemovalFromCart = (id) => {
+         let cart = shoppingCart
+         let cartItem = cart.indexOf(id)
+         cart.splice(cartItem, 1)
+         setShoppingCart(cart)
+         closeShoppingCart()
+         setTimeout(function() {openShoppingCart();}, 0)
+
+      }
+      const refreshCart = () => {
+         setShoppingCart(shoppingCart)
+      }
     useEffect(() => {
         getProducts()
         getBusiness()
@@ -319,6 +331,8 @@ const App = () => {
                         </div>
                     )
                 })}
+                <h5>Total Amount: ${cartTotal}</h5>
+                <button onClick={(e) => {setShoppingCart([])}}>Buy</button>
             </Modal>
             <br/>
             <br/>
