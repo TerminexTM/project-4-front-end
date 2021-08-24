@@ -306,9 +306,20 @@ const App = () => {
                 }
             </div>
          </div>
-            <br/>
-            <br/>
-            <button onClick={openShoppingCart}>Shopping Cart</button>
+            <div className="middleContent">
+               <button onClick={openShoppingCart}>Shopping Cart</button>
+               <button onClick={openProductManager}>Add Product</button>
+               <fieldset className="filter">
+                  <select onChange={(e)=>{setFilter(e.target.value)}}>
+                     <option value="all">all</option>
+                     {businesses.map( (business)=> {
+                        return (
+                           <option value={business.name}>{business.name}</option>
+                        )
+                     })}
+               </select>
+               </fieldset>
+            </div>
             <Modal open={openShoppingCartModal} onClose={closeShoppingCart}
             classNames={{
                 overlay: 'customOverlay',
@@ -334,26 +345,13 @@ const App = () => {
                 <h5>Total Amount: ${cartTotal}</h5>
                 <button onClick={(e) => {setShoppingCart([])}}>Buy</button>
             </Modal>
-            <br/>
-            <br/>
-            <button onClick={openProductManager}>Add Product</button>
             <Modal open={openProductModal} onClose={closeProductManager} classNames={{
                 overlay: 'customOverlay',
                 modal: 'customModal',
             }} >
                <Add handleCreate={handleCreate} businessKey={businessKey} />
             </Modal>
-            <fieldset className="filter">
-               <legend>Filter: </legend>
-               <select onChange={(e)=>{setFilter(e.target.value)}}>
-                  <option value="all">all</option>
-                  {businesses.map( (business)=> {
-                     return (
-                        <option value={business.name}>{business.name}</option>
-                     )
-                  })}
-               </select>
-            </fieldset>
+
 
 
             <div className="products">
