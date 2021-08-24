@@ -242,7 +242,7 @@ const App = () => {
     return (
         <>
             <h1>Ecom</h1>
-            <div>
+            <div className="greatContainer">
                 {toggleLogout ?
                     <button onClick={handleLogout} >Logout</button> :
                     <div >

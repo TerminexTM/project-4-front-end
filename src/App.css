@@ -39,6 +39,11 @@
 img {
    width: 30%;
 }
-Modal {
-   text-align: center;
+.products {
+   border: 2px solid black;
+   display: flex;
+   flex-wrap: wrap;
+}
+.product {
+   width: 30%;
 }
