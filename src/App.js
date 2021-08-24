@@ -388,10 +388,6 @@ const App = () => {
                        key={product.id}
                        id={product.id}
                        >
-                       {currentUser.username &&
-                       <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
-                       }
-                       {console.log(product)}
                        <div
                        className="modalButton"
                        onClick={(e)=>setProductModal(product.id)}>
@@ -399,19 +395,21 @@ const App = () => {
                            <h4>Name: {product.name}</h4>
                            <h5>Price: ${product.price}</h5>
                         </div>
+                        {currentUser.username &&
+                        <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
+                        }
                         <Modal open={productModal===product.id} onClose={(e)=>setProductModal(false)} classNames={{
                             overlay: 'customOverlay',
                             modal: 'customModal',
                         }}>
-                           <div className='product Modal'>
-                              <img src={product.image} />
+                           <div className='productModal'>
+                              <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}}/>
                               <h4>Name: {product.name}</h4>
                               <h5>Description: {product.description}</h5>
                               <h5>Category: {product.category}</h5>
                               <h5>Business: {product.business_name}</h5>
                               <h5>Business ID: {product.business_id}</h5>
                               <h5>Price: ${product.price}</h5>
-                              <h4>Name: {product.name}</h4>
                               {currentUser.username &&
                                  <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
                               }
