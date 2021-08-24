@@ -390,7 +390,7 @@ const App = () => {
                            modal: 'customModal',
                        }}>
                            <div className='productModal'>
-                              <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}}/>
+                              <img src={product.image} className="productModalImg" onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}}/>
                               <h4>{product.name}</h4>
                               <h5>{product.description}</h5>
                               <h5>Category: {product.category}</h5>
@@ -424,7 +424,7 @@ const App = () => {
                        <div
                        className="modalButton"
                        onClick={(e)=>setProductModal(product.id)}>
-                           <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}} />
+                           <img src={product.image}  onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}} />
                            <h4>{product.name}</h4>
                            <h5>${product.price}</h5>
                         </div>
@@ -436,7 +436,7 @@ const App = () => {
                             modal: 'customModal',
                         }}>
                            <div className='productModal'>
-                              <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}}/>
+                              <img src={product.image} className="productModalImg" onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}}/>
                               <h4>{product.name}</h4>
                               <h5>{product.description}</h5>
                               <h5>Category: {product.category}</h5>
