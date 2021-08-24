@@ -48,6 +48,7 @@ const App = () => {
     // Shopping Cart event handlers
     const openShoppingCart = () => {setOpenShoppingCartModal(true)}
     const closeShoppingCart = () => {setOpenShoppingCartModal(false)}
+    let cartTotal = 0
 
 
 
@@ -206,7 +207,7 @@ const App = () => {
     console.log(shoppingCart);
 
     const removeProduct = (event) => {
-        const deleteItem = shoppingCart.filter(shoppingCart) => event.target.value !== event.target.value
+        // const deleteItem = shoppingCart.filter(shoppingCart) => event.target.value !== event.target.value
     }
 
     const getProducts = () => {
@@ -306,9 +307,11 @@ const App = () => {
                             <h5>{cartProduct.name}</h5>
                             <h5>{cartProduct.price}</h5>
                             {console.log(shoppingCart.indexOf(cartProduct))}
+                            {cartTotal += cartProduct.price}
                         </div>
                     )
                 })}
+                <h5>Total Amount: ${cartTotal}</h5>
             </Modal>
             <br/>
             <br/>
