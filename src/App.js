@@ -369,28 +369,50 @@ const App = () => {
 
             <div className="products">
                 {(filter===filter && filter!=="all") && products.filter(products => products.business_name.includes(filter)).map((product) => {
-                    return (
-                        <div className="product" key={product.id}>
-                            <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}} />
-                            <h4>Name: {product.name}</h4>
-                            <h5>Description: {product.description}</h5>
-                            <h5>Category: {product.category}</h5>
-                            <h5>Business: {product.business_name}</h5>
-                            <h5>Business ID: {product.business_id}</h5>
-                            <h5>Price: {product.price}</h5>
-                            {currentUser.username &&
-                            <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
-                           }
-                            <Edit handleUpdate={handleUpdate} product={product}/>
-                            {(currentBusiness.id === product.business_id) &&
-                                <button onClick={handleDelete} value={product.id}>
-                                    Delete
-                                </button>
+                   return (
+                      <div
+                      className="product"
+                      key={product.id}
+                      id={product.id}
+                      >
+                      <div
+                      className="modalButton"
+                      onClick={(e)=>setProductModal(product.id)}>
+                           <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}} />
+                           <h4>{product.name}</h4>
+                           <h5>${product.price}</h5>
+                       </div>
+                       {currentUser.username &&
+                       <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
+                       }
+                       <Modal open={productModal===product.id} onClose={(e)=>setProductModal(false)} classNames={{
+                           overlay: 'customOverlay',
+                           modal: 'customModal',
+                       }}>
+                           <div className='productModal'>
+                              <img src={product.image} onError={(e)=>{e.target.onerror = null; e.target.src="https://i.imgur.com/63ojVXq.jpeg"}}/>
+                              <h4>{product.name}</h4>
+                              <h5>{product.description}</h5>
+                              <h5>Category: {product.category}</h5>
+                              <h5>Company: {product.business_name}</h5>
+                              <h5>${product.price}</h5>
+                              {currentUser.username &&
+                                 <button onClick={(e)=>setShoppingCart([...shoppingCart, product])}>Add to Cart</button>
+                              }
+                              {(currentBusiness.id===product.business_id) &&
+                              <div>
+                              <button onClick={handleDelete} value={product.id}>
+                                  Delete
+                              </button>
+                              <Edit handleUpdate={handleUpdate} product={product}/>
+                              </div>
+                              }
+                           </div>
 
-                            }
+                       </Modal>
 
-                        </div>
-                    )
+                      </div>
+                   )
                 })}
                 {(filter==="all") && products.map( (product) => {
                    return (
